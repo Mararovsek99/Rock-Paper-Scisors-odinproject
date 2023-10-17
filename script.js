@@ -2,7 +2,20 @@
 let computerWin = 0;
 let userWin = 0;
 
-for(let i = 0; i < 5; i++){
+const rockUser = document.getElementById("rockBtn");
+rockUser.addEventListener("click", () => startGame("rock"));
+
+const paperUser = document.getElementById("paperBtn");
+paperUser.addEventListener("click", () =>  startGame("paper"));
+
+const scissorsUser = document.getElementById("scissorsBtn");
+scissorsUser.addEventListener("click", () =>  startGame("scissors"));
+
+function startGame(x){
+    playerChoice = x;
+    game();
+    addScore();
+}
 
     function game(){
     function getComputerChoice(){
@@ -11,7 +24,6 @@ for(let i = 0; i < 5; i++){
         return randomString[randomMath];
     }
 
-    let playerChoice = prompt("Rock,Paper or Scissors?"," ");
 
     function compareSelection(){
         let computerSelection = getComputerChoice();
@@ -19,35 +31,46 @@ for(let i = 0; i < 5; i++){
 
         if(playerSelection === "rock" & computerSelection === "scissors"){
             userWin = userWin + 1 ;
-            return alert("You win! Rock beats Scissors");
         }
         else if(playerSelection === "paper" & computerSelection === "rock"){
             userWin = userWin + 1 ;
-            return alert("You win! Paper beats Rock");
         }
         else if(playerSelection === "scissors" & computerSelection === "paper"){
             userWin = userWin + 1 ;
-            return alert("You win! Scissors beats Paper");
         }
         else if(playerSelection === computerSelection){
-            i = i - 1;
-            return alert("It's a Tie !")
+            
         }
         else if(playerSelection === " "){
-            i = i - 1;
-            return alert("Invalid word, please try again !")
+            
         }
         else{
             computerWin = computerWin + 1;
-            return alert("You lose! " + computerSelection + " beats " + playerSelection);
-
         }
         
         
     }
     compareSelection();
     }
-game();
-}
-
-alert("Computer score is: " + computerWin + " and your score is: " + userWin);
+    function addScore(){
+        const gamescore = document.querySelector("#score");
+        const newScore = document.createElement("div");
+        const newContent = document.createTextNode("You: " + userWin +"  Computer: " + computerWin);
+        newScore.appendChild(newContent);
+        gamescore.appendChild(newScore);
+        console.log("You: ",userWin,"  Computer: ", computerWin);
+        if(computerWin === 5){
+            const compWin = document.createTextNode("   Computer is Winner!");
+            newScore.appendChild(compWin);
+        gamescore.appendChild(newScore);
+        computerWin = 0;
+        userWin = 0;
+        }
+        else if(userWin === 5){
+            const usWin = document.createTextNode("   You are Winner!");
+            newScore.appendChild(usWin);
+        gamescore.appendChild(newScore);
+        computerWin = 0;
+        userWin = 0;
+        }
+    }
